@@ -39,11 +39,13 @@
     });
   }
 
+  /* Kept in step with the CSS custom properties — the canvases draw over glass
+     panels, so gridlines are light-on-dark translucency rather than flat greys. */
   var COLORS = {
-    green: '#4ade80', red: '#f87171', cyan: '#38bdf8',
+    green: '#4ade80', red: '#f87171', cyan: '#22d3ee',
     amber: '#fbbf24', violet: '#a78bfa',
-    grid: '#1f2630', gridSoft: 'rgba(31,38,48,.55)',
-    text: '#e6edf3', dim: '#8b98a9', faint: '#5d6977', panel: '#12161d'
+    grid: 'rgba(146,178,230,.22)', gridSoft: 'rgba(146,178,230,.10)',
+    text: '#e8eefc', dim: '#94a3c4', faint: '#7d8fb2', panel: '#131a2c'
   };
 
   var MONO = '11px "JetBrains Mono", ui-monospace, monospace';
@@ -121,57 +123,83 @@
   }
 
   /* ---------- hero grid backdrop ---------- */
-  function heroGrid() {
-    var cv = document.getElementById('heroGrid');
+  /* One fixed canvas behind the entire page: a drifting grid, two slow light
+     sources, and a decorative price trace. It parallaxes gently with scroll so
+     the page reads as a window onto something continuous rather than a stack
+     of panels. */
+  function ambient() {
+    var cv = document.getElementById('ambient');
     if (!cv) return;
-    var t = 0, raf = null;
+    var t = 0, raf = null, scrollY = 0;
 
     function draw() {
       var f = fitCanvas(cv), ctx = f.ctx, w = f.w, h = f.h;
       ctx.clearRect(0, 0, w, h);
-      var step = 46;
 
+      // two drifting light sources
+      var orbs = [
+        { x: w * (0.22 + Math.sin(t * 0.21) * 0.07), y: h * (0.28 + Math.cos(t * 0.17) * 0.09),
+          r: Math.max(w, h) * 0.46, c: '34,211,238', a: 0.15 },
+        { x: w * (0.80 + Math.cos(t * 0.15) * 0.08), y: h * (0.70 + Math.sin(t * 0.23) * 0.08),
+          r: Math.max(w, h) * 0.42, c: '167,139,250', a: 0.13 }
+      ];
+      orbs.forEach(function (o) {
+        var g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+        g.addColorStop(0, 'rgba(' + o.c + ',' + o.a + ')');
+        g.addColorStop(1, 'rgba(' + o.c + ',0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+      });
+
+      // grid, offset by scroll so it drifts as you move down the page
+      var step = 54, off = (scrollY * 0.12) % step;
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(31,38,48,.55)';
+      ctx.strokeStyle = 'rgba(146,178,230,.055)';
       ctx.beginPath();
       for (var x = 0; x <= w; x += step) { ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, h); }
-      for (var y = 0; y <= h; y += step) { ctx.moveTo(0, y + .5); ctx.lineTo(w, y + .5); }
+      for (var y = -step; y <= h + step; y += step) {
+        var yy = Math.round(y - off) + .5;
+        ctx.moveTo(0, yy); ctx.lineTo(w, yy);
+      }
       ctx.stroke();
 
-      // a slow drifting price-like path, purely decorative
+      // decorative price trace, parallaxed at a slower rate than the grid
       ctx.beginPath();
-      var amp = h * 0.13, mid = h * 0.62;
+      var amp = h * 0.11, mid = h * 0.58 - (scrollY * 0.04) % (h * 0.5);
       for (var i = 0; i <= w; i += 4) {
         var p = i / w;
         var v = Math.sin(p * 5.2 + t) * .55 + Math.sin(p * 11.3 - t * 1.7) * .28 + Math.sin(p * 23.1 + t * .6) * .13;
-        var yy = mid - v * amp - p * h * 0.12;
-        if (i === 0) ctx.moveTo(i, yy); else ctx.lineTo(i, yy);
+        var py = mid - v * amp;
+        if (i === 0) ctx.moveTo(i, py); else ctx.lineTo(i, py);
       }
-      var g = ctx.createLinearGradient(0, 0, w, 0);
-      g.addColorStop(0, 'rgba(74,222,128,0)');
-      g.addColorStop(.35, 'rgba(74,222,128,.35)');
-      g.addColorStop(1, 'rgba(56,189,248,.18)');
-      ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.stroke();
-
-      // vignette so text stays readable
-      var vg = ctx.createRadialGradient(w * .3, h * .45, 0, w * .3, h * .45, Math.max(w, h) * .75);
-      vg.addColorStop(0, 'rgba(10,12,16,.86)');
-      vg.addColorStop(1, 'rgba(10,12,16,.25)');
-      ctx.fillStyle = vg; ctx.fillRect(0, 0, w, h);
+      var lg = ctx.createLinearGradient(0, 0, w, 0);
+      lg.addColorStop(0, 'rgba(34,211,238,0)');
+      lg.addColorStop(.38, 'rgba(34,211,238,.26)');
+      lg.addColorStop(1, 'rgba(167,139,250,.14)');
+      ctx.strokeStyle = lg; ctx.lineWidth = 1.4; ctx.stroke();
     }
 
-    function loop() { t += 0.004; draw(); raf = requestAnimationFrame(loop); }
+    function loop() { t += 0.003; draw(); raf = requestAnimationFrame(loop); }
+    function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
 
     draw();
     if (!reduceMotion) {
       loop();
-      // stop animating once the hero is off screen
-      var io = new IntersectionObserver(function (es) {
-        if (es[0].isIntersecting) { if (!raf) loop(); }
-        else if (raf) { cancelAnimationFrame(raf); raf = null; }
-      }, { threshold: 0 });
-      io.observe(cv);
+      // a hidden tab should not burn frames on decoration
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stop(); else if (!raf) loop();
+      });
     }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      scrollY = window.scrollY;
+      if (reduceMotion && !ticking) {          // static mode still tracks the parallax
+        ticking = true;
+        requestAnimationFrame(function () { ticking = false; draw(); });
+      }
+    }, { passive: true });
+
     onResize(draw);
   }
 
@@ -465,7 +493,7 @@
     if (y) y.textContent = String(new Date().getFullYear());
     var stamp = document.getElementById('nowStamp');
     if (stamp) stamp.textContent = new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-    runBoot(); heroGrid(); ticker(); observers();
+    runBoot(); ambient(); ticker(); observers();
     anchors(); timeline(); filters(); copyChips(); contactForm(); clock();
     glow(); typeHeaders(); skillTrace(); keyNav();
   }
