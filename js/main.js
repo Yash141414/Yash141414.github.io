@@ -67,9 +67,23 @@
     return n.toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
   }
 
+  /* Animate a number up to its value. `format` turns a number into display text,
+     so the same helper drives "1.80", "60%" and "-18.2%". */
+  function countUp(el, target, format, ms) {
+    if (reduceMotion) { el.textContent = format(target); return; }
+    var t0 = performance.now(), dur = ms || 900;
+    (function step(now) {
+      var p = Math.min(1, (now - t0) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = format(target * eased);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = format(target);
+    })(t0);
+  }
+
   window.QC = {
     fitCanvas: fitCanvas, onResize: onResize, COLORS: COLORS, MONO: MONO,
-    ticks: ticks, fmt: fmt, reduceMotion: reduceMotion
+    ticks: ticks, fmt: fmt, countUp: countUp, reduceMotion: reduceMotion
   };
 
   /* ---------- boot sequence ---------- */
@@ -215,17 +229,121 @@
     });
   }
 
-  /* ---------- expandable principle cards ---------- */
-  function principles() {
-    document.querySelectorAll('.principle').forEach(function (card) {
-      function toggle() {
-        var open = card.classList.toggle('is-open');
-        card.setAttribute('aria-expanded', String(open));
-      }
-      card.addEventListener('click', toggle);
-      card.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  /* ---------- cursor-following glow on cards ---------- */
+  function glow() {
+    if (reduceMotion || !window.matchMedia('(hover:hover)').matches) return;
+    document.addEventListener('pointermove', function (e) {
+      var card = e.target.closest('[data-glow]');
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+
+  /* ---------- section headings type themselves on first view ---------- */
+  function typeHeaders() {
+    var heads = document.querySelectorAll('.sec-title[data-type]');
+    if (reduceMotion) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        var el = e.target;
+        var mark = el.querySelector('.prompt').textContent;
+        var full = el.textContent.replace(mark, '').trim();
+
+        // Keep the real text available to screen readers while the glyphs animate in.
+        el.setAttribute('aria-label', mark + ' ' + full);
+        el.innerHTML = '<span class="prompt">' + mark + '</span> ';
+        var tail = document.createTextNode('');
+        el.appendChild(tail);
+
+        /* Driven by elapsed time on rAF, not one timeout per character: a
+           background tab pauses rAF entirely and throttles timers to ~1s, which
+           would otherwise leave the heading stranded empty for half a minute.
+           On return, elapsed time has moved on and it completes at once. */
+        var t0 = performance.now(), CPS = 38;
+        (function tick(now) {
+          var shown = Math.floor((now - t0) / 1000 * CPS);
+          tail.nodeValue = full.slice(0, shown);
+          if (shown < full.length) requestAnimationFrame(tick);
+          else tail.nodeValue = full;
+        })(t0);
       });
+    }, { threshold: .6 });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+
+  /* ---------- skill chips trace back to the projects that used them ---------- */
+  function skillTrace() {
+    var chips = document.querySelectorAll('.sk');
+    var projects = document.querySelectorAll('.proj');
+    if (!chips.length || !projects.length) return;
+
+    function apply(skill) {
+      projects.forEach(function (p) {
+        if (!skill) { p.classList.remove('is-dim', 'is-hit'); return; }
+        var hit = (' ' + (p.dataset.skills || '') + ' ').indexOf(' ' + skill + ' ') > -1;
+        p.classList.toggle('is-hit', hit);
+        p.classList.toggle('is-dim', !hit);
+      });
+    }
+
+    var pinned = null;
+    chips.forEach(function (chip) {
+      var skill = chip.dataset.skill;
+      chip.addEventListener('pointerenter', function () { if (!pinned) apply(skill); });
+      chip.addEventListener('pointerleave', function () { if (!pinned) apply(null); });
+      chip.addEventListener('focus', function () { if (!pinned) apply(skill); });
+      chip.addEventListener('blur', function () { if (!pinned) apply(null); });
+      // click pins the trace so it survives moving the mouse to the grid
+      chip.addEventListener('click', function () {
+        var same = pinned === skill;
+        pinned = same ? null : skill;
+        chips.forEach(function (c) { c.classList.toggle('is-on', !same && c === chip); });
+        apply(pinned);
+      });
+    });
+  }
+
+  /* ---------- j / k (and arrows) step between sections ----------
+     Position is read from the live scroll offset, but presses are locked out
+     until the smooth scroll settles. Without the lock, a second press measures
+     mid-flight and skips several sections at once. */
+  function keyNav() {
+    var locked = false;
+    function unlock() { locked = false; }
+    var ids = [].map.call(document.querySelectorAll('main > section[id]'), function (s) { return s.id; });
+    document.addEventListener('keydown', function (e) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+      var overlay = document.getElementById('termOverlay');
+      if (overlay && !overlay.hidden) return;
+
+      var dir = 0;
+      if (e.key === 'j' || e.key === 'ArrowDown') dir = 1;
+      else if (e.key === 'k' || e.key === 'ArrowUp') dir = -1;
+      else return;
+      e.preventDefault();
+      if (locked) return;
+
+      // section whose top sits nearest the viewport top right now
+      var cur = 0, best = Infinity;
+      ids.forEach(function (id, i) {
+        var d = Math.abs(document.getElementById(id).getBoundingClientRect().top);
+        if (d < best) { best = d; cur = i; }
+      });
+
+      var next = Math.max(0, Math.min(ids.length - 1, cur + dir));
+      if (next === cur) return;
+
+      locked = true;
+      document.getElementById(ids[next])
+        .scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+
+      if ('onscrollend' in window) window.addEventListener('scrollend', unlock, { once: true });
+      setTimeout(unlock, 900);   // belt and braces, and the only path when scrollend is missing
     });
   }
 
@@ -348,7 +466,8 @@
     var stamp = document.getElementById('nowStamp');
     if (stamp) stamp.textContent = new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
     runBoot(); heroGrid(); ticker(); observers();
-    anchors(); principles(); timeline(); filters(); copyChips(); contactForm(); clock();
+    anchors(); timeline(); filters(); copyChips(); contactForm(); clock();
+    glow(); typeHeaders(); skillTrace(); keyNav();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

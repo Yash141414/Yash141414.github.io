@@ -417,20 +417,75 @@
       });
     });
 
-    /* hover / touch scrubbing on the payoff chart */
-    function locate(ev) {
-      var rect = els.payoffCanvas.getBoundingClientRect();
-      var clientX = ev.touches && ev.touches[0] ? ev.touches[0].clientX : ev.clientX;
+    /* ---- scrub to read, drag to move spot ----
+       The chart is the control, not just a picture of one. Hovering scrubs a
+       crosshair readout; pressing and dragging sets the spot price directly and
+       keeps the slider in sync, so both routes stay honest about one state. */
+    var cv = els.payoffCanvas;
+
+    /* The x-domain is derived from spot, so it would rescale under the cursor
+       mid-drag. Freeze it at pointerdown and map against that for the whole drag. */
+    var frozen = null;
+
+    function priceAt(ev) {
+      var rect = cv.getBoundingClientRect();
       var PL = 58, PR = 14;
-      var frac = (clientX - rect.left - PL) / Math.max(1, rect.width - PL - PR);
-      hoverX = model.lo + (model.hi - model.lo) * Math.max(0, Math.min(1, frac));
-      renderNote(); drawPayoff();
+      var lo = frozen ? frozen.lo : model.lo;
+      var hi = frozen ? frozen.hi : model.hi;
+      var frac = (ev.clientX - rect.left - PL) / Math.max(1, rect.width - PL - PR);
+      return lo + (hi - lo) * Math.max(0, Math.min(1, frac));
     }
-    els.payoffCanvas.addEventListener('mousemove', locate);
-    els.payoffCanvas.addEventListener('touchmove', locate, { passive: true });
-    function clear() { hoverX = null; renderNote(); drawPayoff(); }
-    els.payoffCanvas.addEventListener('mouseleave', clear);
-    els.payoffCanvas.addEventListener('touchend', clear);
+
+    function setSpot(price) {
+      var min = parseFloat(cv.ownerDocument.getElementById('inS').min);
+      var max = parseFloat(cv.ownerDocument.getElementById('inS').max);
+      var step = 0.5;
+      var v = Math.max(min, Math.min(max, Math.round(price / step) * step));
+      if (v === state.S) return;
+      els.inS.value = v;
+      readInputs();
+      render();          // rAF-coalesced: a drag fires far faster than we can paint
+    }
+
+    var dragging = false;
+
+    cv.addEventListener('pointerdown', function (ev) {
+      dragging = true;
+      frozen = { lo: model.lo, hi: model.hi };
+      cv.classList.add('is-dragging');
+      // Capture keeps the drag alive outside the canvas, but it throws if the
+      // pointer is not active (synthetic events, some automation). Never let
+      // that abort the drag itself.
+      try { cv.setPointerCapture(ev.pointerId); } catch (err) { /* non-fatal */ }
+      hoverX = null;
+      setSpot(priceAt(ev));
+      ev.preventDefault();
+    });
+
+    cv.addEventListener('pointermove', function (ev) {
+      if (dragging) { setSpot(priceAt(ev)); return; }
+      if (ev.pointerType === 'touch') return;   // no hover state on touch
+      hoverX = priceAt(ev);
+      renderNote(); drawPayoff();
+    });
+
+    function endDrag(ev) {
+      if (!dragging) return;
+      dragging = false;
+      frozen = null;
+      cv.classList.remove('is-dragging');
+      try {
+        if (ev && ev.pointerId != null && cv.hasPointerCapture(ev.pointerId)) {
+          cv.releasePointerCapture(ev.pointerId);
+        }
+      } catch (err) { /* capture was never taken */ }
+    }
+    cv.addEventListener('pointerup', endDrag);
+    cv.addEventListener('pointercancel', endDrag);
+    cv.addEventListener('pointerleave', function () {
+      if (dragging) return;
+      hoverX = null; renderNote(); drawPayoff();
+    });
 
     QC.onResize(function () { if (model) { drawPayoff(); drawGreek(); } });
 

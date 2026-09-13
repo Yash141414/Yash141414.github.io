@@ -185,11 +185,29 @@
     }
   }
 
+  /* Tiles count up once, when they first scroll into view. */
   function renderStats() {
-    document.getElementById('stSharpe').textContent = S.sharpe.toFixed(2);
-    document.getElementById('stHit').textContent = (S.hit * 100).toFixed(0) + '%';
-    document.getElementById('stDD').textContent = (S.maxDD * 100).toFixed(1) + '%';
-    document.getElementById('stN').textContent = String(S.n);
+    var tiles = [
+      ['stSharpe', S.sharpe,        function (v) { return v.toFixed(2); }],
+      ['stHit',    S.hit * 100,     function (v) { return v.toFixed(0) + '%'; }],
+      ['stDD',     S.maxDD * 100,   function (v) { return v.toFixed(1) + '%'; }],
+      ['stN',      S.n,             function (v) { return String(Math.round(v)); }]
+    ];
+    var host = document.querySelector('#view-equity .stats');
+    if (!host) return;
+
+    function run() {
+      tiles.forEach(function (t) {
+        QC.countUp(document.getElementById(t[0]), t[1], t[2]);
+      });
+    }
+    if (QC.reduceMotion) { run(); return; }
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      io.disconnect();
+      run();
+    }, { threshold: .4 });
+    io.observe(host);
   }
 
   function readout(i) {

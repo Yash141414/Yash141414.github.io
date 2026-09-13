@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yash Chheda — Quant Researcher &amp; AI Engineer</title>
-<meta name="description" content="Quant researcher and AI engineer. Derivatives research, NSE F&amp;O backtesting, inference systems. Live Black-Scholes pricing engine and research tooling.">
+<meta name="description" content="Quant researcher and AI engineer. Derivatives research, NSE F&amp;O backtesting, inference systems. With a live Black-Scholes engine you can actually use.">
 <meta property="og:title" content="Yash Chheda — Quant Researcher &amp; AI Engineer">
-<meta property="og:description" content="Derivatives research, NSE F&amp;O backtesting, inference systems. With a live Black-Scholes engine you can actually use.">
+<meta property="og:description" content="Derivatives research, NSE F&O backtesting, inference systems. With a live Black-Scholes engine you can actually use.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,13 +41,12 @@
     <h1 class="hero-name">YASH CHHEDA</h1>
     <p class="hero-role">Quantitative Researcher <span class="sep">/</span> AI Engineer</p>
     <p class="hero-blurb">
-      I build the unglamorous half of quant research — the cost filters, the validation gates,
-      the pipelines that decide whether a signal was ever real. Derivatives, NSE F&amp;O, and the
-      infrastructure underneath.
+      Derivatives research, NSE F&amp;O, and the infrastructure underneath — cost filters,
+      validation gates, and the pipelines that decide whether a signal was ever real.
     </p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#lab">Open the Options Lab <span class="arr">&rarr;</span></a>
-      <a class="btn" href="assets/Yash_Chheda_Resume.pdf" download>Download r&eacute;sum&eacute;</a>
+      <a class="btn" href="assets/Yash_Chheda_Resume.pdf" download>R&eacute;sum&eacute;</a>
       <button class="btn btn-ghost" type="button" data-open-terminal>Press <kbd>`</kbd> for terminal</button>
     </div>
   </div>
@@ -57,35 +56,26 @@
 <section id="whoami" class="sec">
   <header class="sec-head">
     <span class="sec-idx">01</span>
-    <h2 class="sec-title"><span class="prompt">$</span> whoami</h2>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> whoami</h2>
   </header>
   <div class="grid-2">
     <div class="reveal">
       <p class="lede">
-        I'm a quant researcher who started in derivatives data and kept walking upstream until I was
-        building the systems that produce it.
+        I started in derivatives data and kept walking upstream until I was building
+        the systems that produce it.
       </p>
       <p>
-        Most of my work comes back to one question: <em>is this effect still there once you pay for it?</em>
-        At <strong>Aurus Alpha</strong> that meant putting 8+ strategies through real transaction costs, t-tests and
-        bootstrap resampling on two years of NSE F&amp;O data. At <strong>Ikiquant</strong> it meant tracing
-        timestamp mismatches in minute-level derivatives data back to their root cause instead of patching
-        the symptom every morning. At <strong>Nxtgen AI</strong> the same instinct pointed at infrastructure —
-        benchmarking 18 model/hardware configurations under a framework repeatable enough that the team kept it.
-      </p>
-      <p>
-        The through-line is rigour that survives contact with reality: real costs, real latency, real data defects.
+        My work comes back to one question: <em>is this effect still there once you pay for it?</em>
+        Usually it isn't. Finding that out early — before it reaches a desk — is the job.
       </p>
     </div>
-    <aside class="card facts reveal">
+    <aside class="card facts reveal" data-glow>
       <h3 class="card-h">stat</h3>
       <dl class="dl">
         <div><dt>Based</dt><dd>Mumbai / Bangalore</dd></div>
         <div><dt>Degree</dt><dd>B.Sc. Data Science &amp; Business Analytics</dd></div>
-        <div><dt>Institution</dt><dd>HSNC University, Mumbai &middot; 2022&ndash;2025</dd></div>
         <div><dt>GPA</dt><dd><span class="num pos">9.45</span> / 10</dd></div>
-        <div><dt>Certification</dt><dd>NISM-Series-VIII Equity Derivatives (May 2024)</dd></div>
-        <div><dt>Domain</dt><dd>NSE F&amp;O &middot; Greeks &amp; vol surface &middot; backtesting</dd></div>
+        <div><dt>Certified</dt><dd>NISM-Series-VIII Equity Derivatives</dd></div>
       </dl>
     </aside>
   </div>
@@ -94,33 +84,28 @@
 <section id="thinking" class="sec">
   <header class="sec-head">
     <span class="sec-idx">02</span>
-    <h2 class="sec-title"><span class="prompt">$</span> cat method.md</h2>
-    <p class="sec-sub">Four rules I keep running into. Click any card to expand.</p>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> cat method.md</h2>
   </header>
   <div class="principles">
-    <article class="principle reveal" tabindex="0" role="button" aria-expanded="false">
+    <article class="principle reveal" data-glow>
       <span class="p-num">01</span>
       <h3>Validate against real costs</h3>
-      <p class="p-teaser">A strategy that ignores STT, GST and slippage isn't a strategy — it's a chart.</p>
-      <div class="p-body"><p>Gross edge is the easy part. I test net of the costs that actually hit the ledger, and I would rather kill a candidate at the cost gate than discover it in production. On one research pass, applying real transaction costs filtered out <strong>100% of sub-threshold signals</strong> before they ever reached the desk — that filter <em>was</em> the deliverable.</p></div>
+      <p>STT, GST, slippage. Gross edge is the easy part.</p>
     </article>
-    <article class="principle reveal" tabindex="0" role="button" aria-expanded="false">
+    <article class="principle reveal" data-glow>
       <span class="p-num">02</span>
       <h3>Fail fast, gate early</h3>
-      <p class="p-teaser">Order the cheap tests before the expensive ones, and let them say no.</p>
-      <div class="p-body"><p>The VRP framework runs four stages — t-stat, Sharpe, drawdown, cost — each able to reject a hypothesis on its own. The order is deliberate: cheapest and most decisive first. An automated fail-fast cost filter means a dead idea dies in seconds instead of after a week of tuning.</p></div>
+      <p>Cheapest, most decisive test first — and let it say no.</p>
     </article>
-    <article class="principle reveal" tabindex="0" role="button" aria-expanded="false">
+    <article class="principle reveal" data-glow>
       <span class="p-num">03</span>
       <h3>Build for repeatability</h3>
-      <p class="p-teaser">If the result only exists in your notebook, it isn't a result yet.</p>
-      <div class="p-body"><p>Reproducible frameworks, documented methodology, reusable templates. The benchmarking harness I built at Nxtgen became the team standard for pre-deployment validation, and 2 reusable inference templates took the repeated setup out of the loop. Auditability isn't bureaucracy — it's what makes a second opinion possible.</p></div>
+      <p>If it only exists in your notebook, it isn't a result yet.</p>
     </article>
-    <article class="principle reveal" tabindex="0" role="button" aria-expanded="false">
+    <article class="principle reveal" data-glow>
       <span class="p-num">04</span>
       <h3>Root-cause over patching</h3>
-      <p class="p-teaser">Fix the generator, not the symptom — then automate the fix away.</p>
-      <div class="p-body"><p>Recurring timestamp mismatches in minute-level NSE derivatives data could have stayed a standing manual chore. I traced them by hand once, found the mechanism, and wrote the correction script that eliminated the break going forward. The win isn't the clean data — it's never touching it again.</p></div>
+      <p>Fix the generator, then automate the fix away.</p>
     </article>
   </div>
 </section>
@@ -128,68 +113,64 @@
 <section id="experience" class="sec">
   <header class="sec-head">
     <span class="sec-idx">03</span>
-    <h2 class="sec-title"><span class="prompt">$</span> git log --author=yash</h2>
-    <p class="sec-sub">Three roles. Click a row to expand.</p>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> git log --author=yash</h2>
   </header>
   <ol class="timeline">
     <li class="tl-item reveal is-open">
       <button class="tl-head" aria-expanded="true">
         <span class="tl-node" aria-hidden="true"></span>
         <span class="tl-meta">
-          <span class="tl-co">Nxtgen AI Pvt Ltd.</span>
-          <span class="tl-role">AI Engineer — Inference Systems &amp; Data Pipelines</span>
+          <span class="tl-co">Nxtgen AI</span>
+          <span class="tl-role">AI Engineer — Inference Systems</span>
         </span>
         <span class="tl-date">Dec 2025 – Apr 2026</span>
         <span class="tl-chev" aria-hidden="true">&#9662;</span>
       </button>
       <div class="tl-body">
         <ul class="bullets">
-          <li>Benchmarked <strong>18 model/hardware configurations</strong> (NVIDIA H100, L40S, Intel Xeon) using a repeatable evaluation framework, adopted as the team standard for pre-deployment infrastructure validation.</li>
-          <li>Queried and validated model configuration and benchmark data in <strong>PostgreSQL</strong> to support testing and QA of production inference pipelines.</li>
-          <li>Modeled 5+ production load scenarios with <strong>Little's Law</strong> queueing theory to forecast concurrency and bottlenecks before deployment, reducing post-launch performance issues.</li>
-          <li>Reduced <strong>VRAM footprint 4&times;</strong> via FP6/Q6/Q4 quantization across 6 open-source models without throughput degradation; built 2 reusable inference templates to improve process repeatability.</li>
-          <li>Identified and prototyped LLM-based tooling (automated flagging, query assistance) inside inference workflows to accelerate internal analytics.</li>
+          <li>Benchmarked <strong>18 model/hardware configs</strong> (H100, L40S, Xeon) — the framework became the team standard.</li>
+          <li>Cut <strong>VRAM 4&times;</strong> with FP6/Q6/Q4 quantization across 6 models, no throughput loss.</li>
+          <li>Modelled load with Little's Law to catch concurrency bottlenecks before deploy.</li>
         </ul>
-        <div class="chips"><span>TensorRT-LLM</span><span>PostgreSQL</span><span>Quantization</span><span>Queueing theory</span><span>LangChain</span><span>FastAPI</span></div>
+        <div class="chips"><span>TensorRT-LLM</span><span>PostgreSQL</span><span>Quantization</span><span>FastAPI</span></div>
       </div>
     </li>
     <li class="tl-item reveal">
       <button class="tl-head" aria-expanded="false">
         <span class="tl-node" aria-hidden="true"></span>
         <span class="tl-meta">
-          <span class="tl-co">Aurus Alpha Ventures LLP</span>
-          <span class="tl-role">Derivatives Researcher Intern</span>
+          <span class="tl-co">Aurus Alpha Ventures</span>
+          <span class="tl-role">Derivatives Researcher</span>
         </span>
         <span class="tl-date">May 2025 – Nov 2025</span>
         <span class="tl-chev" aria-hidden="true">&#9662;</span>
       </button>
       <div class="tl-body">
         <ul class="bullets">
-          <li>Validated <strong>8+ derivatives strategies</strong> against real transaction costs (STT, GST, slippage) using t-tests, regime-split analysis and bootstrap resampling on 2 years of NSE F&amp;O data — filtering out <strong>100% of sub-threshold signals</strong> before they reached the trading desk.</li>
-          <li>Authored <strong>8+ internal research notes</strong> translating statistical findings on volatility dynamics and market microstructure into clear, decision-ready summaries for the desk.</li>
-          <li>Tested 4 research hypotheses (vol surface, Greeks risk, microstructure, backtesting) using a reproducible Python framework (pandas, scipy, statsmodels), with methodology documented for repeatability.</li>
+          <li>Validated <strong>8+ strategies</strong> against real costs on 2 years of NSE F&amp;O data — filtering <strong>100% of sub-threshold signals</strong> before the desk saw them.</li>
+          <li>t-tests, regime splits and bootstrap resampling in a reproducible Python framework.</li>
+          <li>Wrote <strong>8+ research notes</strong> turning vol and microstructure findings into decisions.</li>
         </ul>
-        <div class="chips"><span>pandas</span><span>scipy</span><span>statsmodels</span><span>Bootstrap</span><span>Regime analysis</span><span>NSE F&amp;O</span></div>
+        <div class="chips"><span>pandas</span><span>scipy</span><span>statsmodels</span><span>NSE F&amp;O</span></div>
       </div>
     </li>
     <li class="tl-item reveal">
       <button class="tl-head" aria-expanded="false">
         <span class="tl-node" aria-hidden="true"></span>
         <span class="tl-meta">
-          <span class="tl-co">Ikiquant Technologies Pvt Ltd.</span>
-          <span class="tl-role">Quantitative Analyst Intern</span>
+          <span class="tl-co">Ikiquant Technologies</span>
+          <span class="tl-role">Quantitative Analyst</span>
         </span>
         <span class="tl-date">Apr 2024 – Dec 2024</span>
         <span class="tl-chev" aria-hidden="true">&#9662;</span>
       </button>
       <div class="tl-body">
         <ul class="bullets">
-          <li>Investigated and resolved recurring timestamp mismatches in minute-level NSE derivatives data through manual root-cause analysis; built an automated correction script to eliminate the recurring break going forward.</li>
-          <li>Validated <strong>8+ backtested options strategies</strong> (Sharpe 1.8, 60% hit ratio) on multi-year NSE derivatives data through rigorous statistical testing before reporting results.</li>
-          <li>Designed <strong>10+ systematic technical indicators</strong> within a structured signal-evaluation framework, improving signal accuracy by <strong>+15%</strong>.</li>
-          <li>Built 5+ real-time data pipelines ingesting live tick data, applying consistency checks to flag ingestion anomalies.</li>
+          <li>Root-caused recurring timestamp breaks in minute-level NSE data, then automated the fix away.</li>
+          <li>Validated <strong>8+ backtested options strategies</strong> (Sharpe 1.8, 60% hit ratio).</li>
+          <li>Designed <strong>10+ systematic indicators</strong>, improving signal accuracy <strong>+15%</strong>.</li>
         </ul>
-        <div class="chips"><span>Python</span><span>WebSocket</span><span>Tick data</span><span>Backtesting</span><span>Signal design</span></div>
+        <div class="chips"><span>Python</span><span>WebSocket</span><span>Tick data</span><span>Backtesting</span></div>
       </div>
     </li>
   </ol>
@@ -198,17 +179,13 @@
 <section id="lab" class="sec sec-wide">
   <header class="sec-head">
     <span class="sec-idx">04</span>
-    <h2 class="sec-title"><span class="prompt">$</span> ./options_lab --live</h2>
-    <p class="sec-sub">
-      A real Black&ndash;Scholes engine running in your browser — not a screenshot. Drag anything;
-      prices, Greeks and both curves recompute on every frame.
-    </p>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> ./options_lab --live</h2>
+    <p class="sec-sub">A real Black&ndash;Scholes engine, not a screenshot. <strong>Drag the chart</strong> to move spot.</p>
   </header>
 
   <div class="lab reveal">
     <div class="lab-controls card">
       <h3 class="card-h">inputs</h3>
-
       <div class="field">
         <label for="selStrategy">Structure</label>
         <select id="selStrategy">
@@ -221,7 +198,6 @@
           <option value="covered-call">Covered call</option>
         </select>
       </div>
-
       <div class="field slider">
         <label for="inS">Spot <span class="fv" id="vS">100.00</span></label>
         <input type="range" id="inS" min="40" max="160" step="0.5" value="100">
@@ -242,7 +218,6 @@
         <label for="inR">Risk-free rate <span class="fv" id="vR">6.5%</span></label>
         <input type="range" id="inR" min="0" max="15" step="0.1" value="6.5">
       </div>
-
       <div class="legs" id="legs" aria-live="polite"></div>
       <button class="btn btn-sm" type="button" id="btnReset">Reset to ATM</button>
     </div>
@@ -266,7 +241,7 @@
         <div class="gk"><span class="gk-l">Price</span><span class="gk-v" id="gPrice">0.00</span><span class="gk-u">net debit</span></div>
         <div class="gk"><span class="gk-l">Delta &Delta;</span><span class="gk-v" id="gDelta">0.000</span><span class="gk-u">per &#8377;1 spot</span></div>
         <div class="gk"><span class="gk-l">Gamma &Gamma;</span><span class="gk-v" id="gGamma">0.000</span><span class="gk-u">&Delta; per &#8377;1</span></div>
-        <div class="gk"><span class="gk-l">Vega &Nu;</span><span class="gk-v" id="gVega">0.000</span><span class="gk-u">per 1 vol pt</span></div>
+        <div class="gk"><span class="gk-l">Vega &Nu;</span><span class="gk-v" id="gVega">0.000</span><span class="gk-u">per vol pt</span></div>
         <div class="gk"><span class="gk-l">Theta &Theta;</span><span class="gk-v" id="gTheta">0.000</span><span class="gk-u">per day</span></div>
         <div class="gk"><span class="gk-l">Rho &rho;</span><span class="gk-v" id="gRho">0.000</span><span class="gk-u">per 1% rate</span></div>
       </div>
@@ -281,17 +256,12 @@
       </div>
     </div>
   </div>
-  <p class="fineprint">
-    European options, continuous compounding, no dividend yield. Quantities are 1 lot per leg.
-    This is a teaching model, not a trading system.
-  </p>
 </section>
 
 <section id="research" class="sec sec-wide">
   <header class="sec-head">
     <span class="sec-idx">05</span>
-    <h2 class="sec-title"><span class="prompt">$</span> python -m research.report</h2>
-    <p class="sec-sub">What validation output actually looks like when you run it honestly.</p>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> python -m research.report</h2>
   </header>
 
   <div class="tabs tabs-lg" role="tablist" aria-label="Research views">
@@ -301,10 +271,10 @@
 
   <div class="view is-active" id="view-equity">
     <div class="stats reveal">
-      <div class="stat"><span class="stat-l">Sharpe (ann.)</span><span class="stat-v pos" id="stSharpe">—</span></div>
-      <div class="stat"><span class="stat-l">Hit ratio</span><span class="stat-v" id="stHit">—</span></div>
-      <div class="stat"><span class="stat-l">Max drawdown</span><span class="stat-v neg" id="stDD">—</span></div>
-      <div class="stat"><span class="stat-l">Trading days</span><span class="stat-v" id="stN">—</span></div>
+      <div class="stat" data-glow><span class="stat-l">Sharpe (ann.)</span><span class="stat-v pos" id="stSharpe">0.00</span></div>
+      <div class="stat" data-glow><span class="stat-l">Hit ratio</span><span class="stat-v" id="stHit">0%</span></div>
+      <div class="stat" data-glow><span class="stat-l">Max drawdown</span><span class="stat-v neg" id="stDD">0.0%</span></div>
+      <div class="stat" data-glow><span class="stat-l">Trading days</span><span class="stat-v" id="stN">0</span></div>
     </div>
     <div class="card chart-card reveal">
       <div class="chart-head">
@@ -313,10 +283,8 @@
       </div>
       <div class="canvas-wrap tall"><canvas id="equityCanvas" role="img" aria-label="Cumulative return and drawdown over time"></canvas></div>
       <p class="disclaimer">
-        <strong>Illustrative reconstruction.</strong> This curve is generated from a seeded random process
-        calibrated to the Sharpe 1.8 / 60% hit-ratio figures reported for the Ikiquant options backtests.
-        It is a faithful picture of those statistics, <em>not</em> a live or audited track record, and no
-        proprietary data is published here.
+        <strong>Illustrative reconstruction</strong> — a seeded process calibrated to the Sharpe 1.8 / 60%
+        hit-ratio figures reported for the Ikiquant backtests. Not a live track record; no proprietary data here.
       </p>
     </div>
   </div>
@@ -325,17 +293,16 @@
     <div class="card chart-card reveal">
       <div class="chart-head">
         <h3 class="card-h">signals surviving the cost gate</h3>
-        <span class="readout" id="costReadout">—</span>
+        <span class="readout" id="costReadout">&mdash;</span>
       </div>
       <div class="field slider wide">
-        <label for="inCost">Round-trip cost (STT + GST + slippage) <span class="fv" id="vCost">12 bps</span></label>
+        <label for="inCost">Round-trip cost <span class="fv" id="vCost">12 bps</span></label>
         <input type="range" id="inCost" min="0" max="40" step="0.5" value="12">
       </div>
       <div class="canvas-wrap"><canvas id="costCanvas" role="img" aria-label="Gross edge per candidate signal against the cost threshold"></canvas></div>
       <p class="disclaimer">
-        Each bar is a candidate signal's gross edge in basis points. Raise the cost slider and watch the
-        population thin out — this is the gate that filtered <strong>100% of sub-threshold signals</strong> in the
-        Aurus Alpha research pass. Edges shown are synthetic and for demonstration.
+        Each bar is a candidate signal's gross edge. Raise the cost and watch the population thin out —
+        this is the gate that filtered <strong>100% of sub-threshold signals</strong> at Aurus Alpha. Edges are synthetic.
       </p>
     </div>
   </div>
@@ -344,7 +311,7 @@
 <section id="projects" class="sec">
   <header class="sec-head">
     <span class="sec-idx">06</span>
-    <h2 class="sec-title"><span class="prompt">$</span> ls -la ~/projects</h2>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> ls ~/projects</h2>
   </header>
 
   <div class="filters" role="group" aria-label="Filter projects">
@@ -354,109 +321,104 @@
     <button class="chip-btn" data-filter="infra">infra</button>
   </div>
 
-  <div class="proj-grid">
-    <article class="proj card reveal" data-tags="derivatives infra">
+  <div class="proj-grid" id="projGrid">
+    <article class="proj card reveal" data-glow data-tags="derivatives infra" data-skills="python greeks streamlit">
       <h3>Black&ndash;Scholes Pricing Engine</h3>
-      <p>Real-time Greeks (&Delta; &Gamma; &Nu; &Theta;) across 5+ configurable strategy payoffs, with live interactive payoff diagrams and input validation.</p>
+      <p>Real-time Greeks across 5+ configurable payoffs, with live interactive payoff diagrams.</p>
       <div class="chips"><span>Python</span><span>Streamlit</span><span>Greeks</span></div>
-      <p class="proj-foot"><a href="#lab">A JS port is running above &rarr;</a></p>
+      <p class="proj-foot"><a href="#lab">Running live above &rarr;</a></p>
     </article>
-    <article class="proj card reveal" data-tags="research derivatives">
-      <h3>VRP &amp; Day&ndash;Night Asymmetry Framework</h3>
-      <p>Four-stage statistical validation pipeline (t-stat &middot; Sharpe &middot; drawdown gates) with a state-persisted risk gate and an automated fail-fast cost filter — built for repeatability and auditability of research outputs.</p>
+    <article class="proj card reveal" data-glow data-tags="research derivatives" data-skills="pandas statsmodels backtesting">
+      <h3>VRP &amp; Day&ndash;Night Asymmetry</h3>
+      <p>Four-stage validation pipeline with a state-persisted risk gate and automated fail-fast cost filter.</p>
       <div class="chips"><span>pandas</span><span>statsmodels</span><span>Backtesting</span></div>
     </article>
-    <article class="proj card reveal" data-tags="research">
+    <article class="proj card reveal" data-glow data-tags="research" data-skills="scipy testing backtesting nsefo">
       <h3>Strategy Validation Suite</h3>
-      <p>8+ derivatives strategies stress-tested against STT/GST/slippage using t-tests, regime-split analysis and bootstrap resampling across 2 years of NSE F&amp;O data.</p>
+      <p>8+ strategies stress-tested against STT, GST and slippage over 2 years of NSE F&amp;O data.</p>
       <div class="chips"><span>scipy</span><span>Bootstrap</span><span>Regime analysis</span></div>
     </article>
-    <article class="proj card reveal" data-tags="infra">
+    <article class="proj card reveal" data-glow data-tags="infra" data-skills="postgresql tensorrt python">
       <h3>Inference Benchmarking Harness</h3>
-      <p>Repeatable evaluation of 18 model/hardware configurations on H100 / L40S / Xeon, with results persisted to PostgreSQL for QA. Became the team standard for pre-deployment validation.</p>
-      <div class="chips"><span>TensorRT-LLM</span><span>PostgreSQL</span><span>Little's Law</span></div>
+      <p>18 model/hardware configs on H100 / L40S / Xeon, results persisted to PostgreSQL for QA.</p>
+      <div class="chips"><span>TensorRT-LLM</span><span>PostgreSQL</span></div>
     </article>
-    <article class="proj card reveal" data-tags="infra research">
+    <article class="proj card reveal" data-glow data-tags="infra research" data-skills="tensorrt python">
       <h3>Quantization Sweep</h3>
-      <p>FP6 / Q6 / Q4 quantization across 6 open-source models cutting VRAM 4&times; with no throughput degradation, plus 2 reusable inference templates.</p>
+      <p>FP6 / Q6 / Q4 across 6 open-source models. 4&times; less VRAM, same throughput.</p>
       <div class="chips"><span>Quantization</span><span>Benchmarking</span></div>
     </article>
-    <article class="proj card reveal" data-tags="infra derivatives">
-      <h3>Live Tick Ingestion Pipelines</h3>
-      <p>5+ real-time pipelines ingesting NSE tick data with consistency checks that flag ingestion anomalies, plus an automated fix for recurring minute-level timestamp breaks.</p>
-      <div class="chips"><span>WebSocket</span><span>Data QA</span><span>Python</span></div>
+    <article class="proj card reveal" data-glow data-tags="infra derivatives" data-skills="websocket python dataqa">
+      <h3>Live Tick Ingestion</h3>
+      <p>5+ real-time NSE pipelines with consistency checks that flag ingestion anomalies.</p>
+      <div class="chips"><span>WebSocket</span><span>Data QA</span></div>
     </article>
   </div>
 
-  <h3 class="sub-h">skills</h3>
+  <h3 class="sub-h">skills <span class="hint">hover to trace where I used it</span></h3>
   <div class="skills">
     <div class="sk-group reveal">
       <h4>Data &amp; Analytics</h4>
-      <ul class="sk-list">
-        <li><span>SQL / PostgreSQL</span><i class="bar" style="--lv:.9"></i></li>
-        <li><span>Python — pandas, numpy</span><i class="bar" style="--lv:.95"></i></li>
-        <li><span>scipy / statsmodels</span><i class="bar" style="--lv:.85"></i></li>
-        <li><span>Hypothesis testing &amp; bootstrap</span><i class="bar" style="--lv:.85"></i></li>
-        <li><span>Data validation &amp; QA</span><i class="bar" style="--lv:.9"></i></li>
-        <li><span>Anomaly / exception detection</span><i class="bar" style="--lv:.8"></i></li>
-      </ul>
+      <div class="sk-chips">
+        <button class="sk" data-skill="python">Python</button>
+        <button class="sk" data-skill="pandas">pandas / numpy</button>
+        <button class="sk" data-skill="scipy">scipy</button>
+        <button class="sk" data-skill="statsmodels">statsmodels</button>
+        <button class="sk" data-skill="postgresql">SQL / PostgreSQL</button>
+        <button class="sk" data-skill="testing">Hypothesis testing</button>
+        <button class="sk" data-skill="dataqa">Data validation &amp; QA</button>
+      </div>
     </div>
     <div class="sk-group reveal">
       <h4>Tools &amp; Systems</h4>
-      <ul class="sk-list">
-        <li><span>Git</span><i class="bar" style="--lv:.85"></i></li>
-        <li><span>Streamlit</span><i class="bar" style="--lv:.8"></i></li>
-        <li><span>Tableau</span><i class="bar" style="--lv:.7"></i></li>
-        <li><span>FastAPI / WebSocket</span><i class="bar" style="--lv:.75"></i></li>
-        <li><span>TensorRT-LLM</span><i class="bar" style="--lv:.7"></i></li>
-        <li><span>LangChain</span><i class="bar" style="--lv:.7"></i></li>
-      </ul>
+      <div class="sk-chips">
+        <button class="sk" data-skill="git">Git</button>
+        <button class="sk" data-skill="streamlit">Streamlit</button>
+        <button class="sk" data-skill="tableau">Tableau</button>
+        <button class="sk" data-skill="websocket">FastAPI / WebSocket</button>
+        <button class="sk" data-skill="tensorrt">TensorRT-LLM</button>
+        <button class="sk" data-skill="langchain">LangChain</button>
+      </div>
     </div>
     <div class="sk-group reveal">
       <h4>Domain</h4>
-      <ul class="sk-list">
-        <li><span>NSE F&amp;O derivatives</span><i class="bar" style="--lv:.9"></i></li>
-        <li><span>Greeks &amp; vol surface</span><i class="bar" style="--lv:.85"></i></li>
-        <li><span>Backtesting methodology</span><i class="bar" style="--lv:.9"></i></li>
-        <li><span>Market microstructure</span><i class="bar" style="--lv:.75"></i></li>
-        <li><span>Quant research process</span><i class="bar" style="--lv:.85"></i></li>
-        <li><span>Regulation (NISM-VIII)</span><i class="bar" style="--lv:.8"></i></li>
-      </ul>
+      <div class="sk-chips">
+        <button class="sk" data-skill="nsefo">NSE F&amp;O</button>
+        <button class="sk" data-skill="greeks">Greeks &amp; vol surface</button>
+        <button class="sk" data-skill="backtesting">Backtesting</button>
+        <button class="sk" data-skill="micro">Microstructure</button>
+        <button class="sk" data-skill="nism">NISM-VIII</button>
+      </div>
     </div>
   </div>
-  <p class="fineprint">Bar lengths are a self-assessment, not a benchmark. Treat them as a map, not a score.</p>
 </section>
 
 <section id="now" class="sec">
   <header class="sec-head">
     <span class="sec-idx">07</span>
-    <h2 class="sec-title"><span class="prompt">$</span> tail -f now.log</h2>
-    <p class="sec-sub">What's actually on my desk right now.</p>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> tail -f now.log</h2>
   </header>
 
   <div class="grid-2">
-    <!-- EDIT ME: keep this list current; it is the most-read part of any portfolio -->
-    <div class="card reveal">
+    <!-- EDIT ME: keep this current, it is the most-read part of any portfolio -->
+    <div class="card reveal" data-glow>
       <h3 class="card-h">currently</h3>
       <ul class="now-list">
-        <li><span class="tag live">active</span> Intraday NIFTY options research — building an out-of-sample validation harness before trusting any in-sample Sharpe.</li>
-        <li><span class="tag live">active</span> A vectorised BankNifty short-strangle backtest, optimising for full-history runtime rather than loop-by-loop clarity.</li>
-        <li><span class="tag">reading</span> Market microstructure and volatility-risk-premium literature — mostly to find out which published effects survive Indian transaction costs.</li>
-        <li><span class="tag">building</span> This site. The Options Lab above is the part I actually enjoyed.</li>
+        <li><span class="tag live">active</span> Intraday NIFTY options research — out-of-sample harness before trusting any in-sample Sharpe.</li>
+        <li><span class="tag live">active</span> A vectorised BankNifty short-strangle backtest, optimised for full-history runtime.</li>
+        <li><span class="tag">reading</span> Microstructure and VRP literature — which published effects survive Indian costs?</li>
       </ul>
-      <p class="stamp">last updated &middot; <span id="nowStamp">Sep 2026</span></p>
+      <p class="stamp">updated &middot; <span id="nowStamp">Sep 2026</span></p>
     </div>
 
-    <!-- TODO(yash): replace these four with your real interests — one line each. -->
-    <div class="card reveal">
+    <!-- TODO(yash): replace these three with your real interests, one line each. -->
+    <div class="card reveal" data-glow>
       <h3 class="card-h">off-screen <span class="muted">/ placeholder</span></h3>
       <ul class="hobby-list">
-        <li class="todo"><strong>Hobby one</strong><span>Replace me — what you do when you're not at a terminal.</span></li>
-        <li class="todo"><strong>Hobby two</strong><span>Replace me — something you're actively getting better at.</span></li>
-        <li class="todo"><strong>Hobby three</strong><span>Replace me — a rabbit hole you fell into recently.</span></li>
-        <li class="todo"><strong>Hobby four</strong><span>Replace me — the unexpected one people ask about.</span></li>
+        <li class="todo"><strong>Hobby one</strong><span>What you do when you're not at a terminal.</span></li>
+        <li class="todo"><strong>Hobby two</strong><span>Something you're actively getting better at.</span></li>
+        <li class="todo"><strong>Hobby three</strong><span>The unexpected one people ask about.</span></li>
       </ul>
-      <p class="stamp">these four lines are placeholders in the source &mdash; see <code>#now</code> in index.html</p>
     </div>
   </div>
 </section>
@@ -464,8 +426,8 @@
 <section id="contact" class="sec">
   <header class="sec-head">
     <span class="sec-idx">08</span>
-    <h2 class="sec-title"><span class="prompt">$</span> ./contact --send</h2>
-    <p class="sec-sub">Open to quant research, derivatives and data/infra roles. Fastest reply is email.</p>
+    <h2 class="sec-title" data-type><span class="prompt">$</span> ./contact --send</h2>
+    <p class="sec-sub">Open to quant research, derivatives and data roles. Email is fastest.</p>
   </header>
 
   <div class="grid-2">
@@ -475,14 +437,13 @@
         <button class="copy-chip" data-copy="+91 9769054481"><span class="cc-l">phone</span><span class="cc-v">+91 97690 54481</span><span class="cc-a">copy</span></button>
       </div>
       <div class="contact-links">
-        <a class="btn" href="mailto:yash.chheda14@gmail.com">Email me</a>
         <a class="btn" href="https://linkedin.com/in/yash-chheda14" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://github.com/Yash141414" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-primary" href="assets/Yash_Chheda_Resume.pdf" download>Résumé (PDF)</a>
+        <a class="btn btn-primary" href="assets/Yash_Chheda_Resume.pdf" download>R&eacute;sum&eacute; (PDF)</a>
       </div>
     </div>
 
-    <form class="card contact-form reveal" id="contactForm" novalidate>
+    <form class="card contact-form reveal" id="contactForm" novalidate data-glow>
       <h3 class="card-h">message</h3>
       <div class="field">
         <label for="cfName">Name</label>
@@ -494,7 +455,7 @@
       </div>
       <div class="field">
         <label for="cfMsg">Message</label>
-        <textarea id="cfMsg" name="message" rows="4" required></textarea>
+        <textarea id="cfMsg" name="message" rows="3" required></textarea>
       </div>
       <button class="btn btn-primary" type="submit" id="cfSubmit">Send</button>
       <p class="form-status" id="cfStatus" role="status" aria-live="polite"></p>
@@ -504,7 +465,7 @@
   <footer class="foot">
     <span>© <span id="yr">2026</span> Yash Chheda</span>
     <span class="foot-sep">/</span>
-    <span>Built from scratch — no framework, no build step.</span>
+    <span>No framework, no build step.</span>
     <span class="foot-sep">/</span>
     <button class="linkish" type="button" data-open-terminal>open terminal</button>
   </footer>
@@ -515,6 +476,7 @@
 <div class="statusbar" id="statusbar">
   <span class="sb-item"><i class="live-dot"></i> session active</span>
   <span class="sb-item sb-sec" id="sbSection">init</span>
+  <span class="sb-item sb-keys"><kbd>J</kbd><kbd>K</kbd> to move</span>
   <button class="sb-item sb-prompt" type="button" data-open-terminal><span class="prompt">$</span> press <kbd>`</kbd> for terminal</button>
   <span class="sb-item sb-clock" id="sbClock">--:--:--</span>
 </div>

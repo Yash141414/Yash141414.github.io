@@ -92,8 +92,17 @@ main{margin-left:var(--rail);padding-bottom:70px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .card-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-faint);margin:0 0 16px;font-weight:500}
 .muted{color:var(--fg-faint)}
-.fineprint{font-size:12.5px;color:var(--fg-faint);font-family:var(--mono);margin-top:20px;max-width:80ch}
 .num{font-family:var(--mono)}
+
+/* Cursor-following glow. JS writes --mx/--my on pointermove; the gradient is kept
+   faint so it reads as a light source rather than tinting the text under it. */
+[data-glow]{position:relative}
+[data-glow]::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  opacity:0;transition:opacity .3s var(--ease);
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(74,222,128,.10),transparent 62%);
+}
+[data-glow]:hover::before{opacity:1}
 .pos{color:var(--green)} .neg{color:var(--red)}
 
 /* ---------- buttons ---------- */
@@ -166,18 +175,15 @@ kbd{font-family:var(--mono);background:var(--bg);border:1px solid var(--line-2);
 .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .principle{
   background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-  padding:22px;cursor:pointer;position:relative;overflow:hidden;
+  padding:22px;position:relative;overflow:hidden;
   transition:border-color .2s var(--ease),transform .2s var(--ease);
 }
-.principle:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.principle:hover{border-color:var(--line-2);transform:translateY(-3px)}
 .principle::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--green);transform:scaleY(0);transform-origin:top;transition:transform .3s var(--ease)}
-.principle.is-open::after{transform:scaleY(1)}
+.principle:hover::after{transform:scaleY(1)}
 .p-num{font-family:var(--mono);font-size:11px;color:var(--fg-faint);letter-spacing:.2em}
-.principle h3{font-size:17px;margin:8px 0 10px;font-weight:600;letter-spacing:-.01em}
-.p-teaser{font-size:13.5px;color:var(--fg-dim);margin:0}
-.p-body{max-height:0;overflow:hidden;transition:max-height .38s var(--ease),opacity .28s var(--ease);opacity:0}
-.principle.is-open .p-body{max-height:460px;opacity:1}
-.p-body p{font-size:13.5px;margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.principle h3{font-size:16.5px;margin:8px 0 8px;font-weight:600;letter-spacing:-.01em}
+.principle p{font-size:13.5px;color:var(--fg-dim);margin:0}
 
 /* ---------- timeline ---------- */
 .timeline{list-style:none;margin:0;padding:0;position:relative}
@@ -248,6 +254,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.22)}
 .canvas-wrap.sm{height:150px}
 .canvas-wrap.tall{height:400px}
 .canvas-wrap canvas{width:100%;height:100%;display:block;touch-action:pan-y}
+#payoffCanvas{cursor:ew-resize}
+#payoffCanvas.is-dragging{cursor:grabbing}
 .chart-note{font-family:var(--mono);font-size:12px;color:var(--fg-dim);margin:12px 0 0;min-height:1.4em}
 .chart-note b{color:var(--amber);font-weight:500}
 
@@ -295,13 +303,19 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.22)}
 .proj-foot{margin-top:12px;font-family:var(--mono);font-size:12px}
 .proj.is-hidden{display:none}
 
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
 .sk-group h4{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin:0 0 14px}
-.sk-list{list-style:none;margin:0;padding:0}
-.sk-list li{display:flex;align-items:center;gap:12px;padding:7px 0;font-size:13.5px;color:var(--fg-dim)}
-.sk-list li span{flex:1;min-width:0}
-.bar{height:3px;width:76px;flex:none;background:var(--line-2);border-radius:2px;position:relative;overflow:hidden}
-.bar::after{content:"";position:absolute;inset:0;transform-origin:left;transform:scaleX(var(--lv));background:var(--green);border-radius:2px;transition:transform .8s var(--ease)}
+.sk-chips{display:flex;flex-wrap:wrap;gap:7px}
+.sk{
+  font-family:var(--mono);font-size:12px;padding:6px 11px;border-radius:6px;cursor:pointer;
+  background:var(--panel);border:1px solid var(--line);color:var(--fg-dim);
+  transition:all .16s var(--ease);
+}
+.sk:hover,.sk.is-on{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.5);color:var(--cyan);transform:translateY(-1px)}
+.hint{font-family:var(--mono);font-size:11px;color:var(--fg-faint);letter-spacing:0;text-transform:none;margin-left:10px}
+/* while a skill is held, unrelated projects recede rather than disappear */
+.proj.is-dim{opacity:.28;filter:saturate(.4)}
+.proj.is-hit{border-color:rgba(56,189,248,.55);box-shadow:0 0 0 1px rgba(56,189,248,.25)}
 
 /* ---------- now / hobbies ---------- */
 .now-list,.hobby-list{list-style:none;margin:0;padding:0}
@@ -350,6 +364,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.22)}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.45)}50%{opacity:.65;box-shadow:0 0 0 5px rgba(74,222,128,0)}}
 .sb-sec{color:var(--fg-dim)}
 .sb-sec::before{content:"§ "}
+.sb-keys{gap:4px}
+.sb-keys kbd{font-size:10px;padding:0 4px}
 .sb-prompt{background:none;border:0;color:var(--fg-faint);font:inherit;cursor:pointer;margin-left:auto}
 .sb-prompt:hover{color:var(--fg-dim)}
 .sb-clock{color:var(--fg-dim);font-variant-numeric:tabular-nums}
@@ -425,7 +441,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.22)}
   .foot{flex-direction:column;align-items:flex-start;gap:6px}
   .foot-sep{display:none}
   .statusbar{gap:12px;padding:0 12px;font-size:10px}
-  .sb-sec{display:none}
+  .sb-sec,.sb-keys{display:none}
+  .hint{display:block;margin:6px 0 0}
   .term{max-height:92svh}
   .hero-cta .btn{flex:1 1 auto;justify-content:center}
 }
