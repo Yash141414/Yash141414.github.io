@@ -23,7 +23,7 @@
     return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
   }
 
-  var TARGET_SHARPE = 1.8;     // as reported for the Ikiquant backtests
+  var TARGET_SHARPE = 1.8;     // Ikiquant out-of-sample, Jan 2023 – Jun 2024
   /* Reported hit ratio is 60%. The affine rescale below nudges the realised win rate
      up by ~2 points, so the generator is seeded under that to land on it. Whatever it
      actually produces is what the stat tiles report — chart and numbers cannot disagree. */

@@ -44,12 +44,10 @@
 
     whoami: function () {
       write([
-        '<span class="t-hi">Yash Chheda</span> — quantitative researcher / AI engineer',
+        '<span class="t-hi">Yash Chheda</span> — quantitative researcher, derivatives &amp; systematic trading',
         'Mumbai &amp; Bangalore, India',
         '',
-        'Derivatives research, NSE F&amp;O backtesting, and the data and inference',
-        'infrastructure underneath it. I care most about whether an effect survives',
-        'real transaction costs — most do not, and finding that out early is the job.'
+        'NSE F&amp;O options: strategy backtesting, transaction-cost modelling, statistical validation.'
       ].join('\n'));
     },
 
@@ -60,20 +58,22 @@
         '   Little\u2019s Law load modelling · PostgreSQL validation of pipeline data',
         '',
         '<span class="t-ok">May 2025 – Nov 2025</span>  Aurus Alpha Ventures LLP  <span class="t-key">Derivatives Researcher</span>',
-        '   8+ strategies validated net of STT/GST/slippage on 2y NSE F&amp;O data',
+        '   8 strategies validated net of STT/GST/slippage on 2y NSE F&amp;O data;',
+        '   all 8 profitable net of costs until F&amp;O regulatory changes',
         '   t-tests · regime splits · bootstrap · 8+ internal research notes',
         '',
         '<span class="t-ok">Apr 2024 – Dec 2024</span>  Ikiquant Technologies     <span class="t-key">Quantitative Analyst</span>',
-        '   8+ backtested options strategies (Sharpe 1.8, 60% hit ratio)',
-        '   10+ systematic indicators, +15% signal accuracy · 5+ tick pipelines'
+        '   8+ options strategies, out-of-sample Jan 2023 – Jun 2024 (Sharpe 1.8, 60% hit)',
+        '   10+ indicators → pair-trading signal, 15% more trades · 5+ tick pipelines'
       ].join('\n'));
     },
 
     projects: function () {
       write([
+        'drwxr-xr-x  <span class="t-key">nifty_options_research/</span> 3 strategies, frozen holdout, all costs',
         'drwxr-xr-x  <span class="t-key">black_scholes_engine/</span>   real-time Greeks, 5+ payoff structures',
         'drwxr-xr-x  <span class="t-key">vrp_asymmetry_framework/</span> 4-stage validation, fail-fast cost gate',
-        'drwxr-xr-x  <span class="t-key">strategy_validation/</span>     8+ strategies vs real costs',
+        'drwxr-xr-x  <span class="t-key">strategy_validation/</span>     8 strategies vs real costs',
         'drwxr-xr-x  <span class="t-key">inference_benchmarks/</span>    18 configs, H100 / L40S / Xeon',
         'drwxr-xr-x  <span class="t-key">quantization_sweep/</span>      FP6 / Q6 / Q4 across 6 models',
         'drwxr-xr-x  <span class="t-key">tick_pipelines/</span>          live NSE ingestion + consistency checks',
@@ -104,8 +104,8 @@
 
     now: function () {
       write([
-        '<span class="t-ok">[active]</span>  Intraday NIFTY options research — out-of-sample harness first,',
-        '           conclusions second.',
+        '<span class="t-ok">[active]</span>  NIFTY intraday options research (GitHub: Portfolio) — frozen rules',
+        '           failed the holdout; forward-testing the DTE-1 credit spread.',
         '<span class="t-ok">[active]</span>  Vectorised BankNifty short-strangle backtest, optimised for',
         '           full-history runtime.',
         '<span class="t-hi">[reading]</span> Microstructure and VRP literature — mostly to see which',

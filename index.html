@@ -3,11 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yash Chheda — Quant Researcher &amp; AI Engineer</title>
-<meta name="description" content="Quant researcher and AI engineer. Derivatives research, NSE F&amp;O backtesting, inference systems. With a live Black-Scholes engine you can actually use.">
-<meta property="og:title" content="Yash Chheda — Quant Researcher &amp; AI Engineer">
-<meta property="og:description" content="Derivatives research, NSE F&O backtesting, inference systems. With a live Black-Scholes engine you can actually use.">
-<meta property="og:type" content="website">
+<title>Yash Chheda — Quantitative Researcher | Derivatives &amp; Systematic Trading</title>
+<meta name="description" content="Yash Chheda, quantitative researcher: NSE F&amp;O derivatives research, intraday NIFTY options backtesting, transaction-cost modelling and statistical validation. With a live Black-Scholes engine you can actually use.">
+<meta property="og:title" content="Yash Chheda — Quantitative Researcher">
+<meta property="og:description" content="NSE F&amp;O derivatives research, intraday NIFTY options backtesting, transaction-cost modelling and statistical validation.">
+<meta property="og:type" content="profile">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Yash Chheda",
+  "jobTitle": "Quantitative Researcher",
+  "url": "https://yash141414.github.io",
+  "sameAs": ["https://github.com/Yash141414", "https://linkedin.com/in/yash-chheda14"],
+  "alumniOf": "HSNC University, Mumbai",
+  "knowsAbout": ["Quantitative research", "Derivatives", "Options pricing", "Backtesting", "Statistical hypothesis testing", "Volatility risk premium", "Market microstructure", "Python", "SQL"]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -41,10 +53,9 @@
   <div class="hero-inner">
     <pre class="boot" id="boot" aria-label="Boot sequence"></pre>
     <h1 class="hero-name">YASH CHHEDA</h1>
-    <p class="hero-role">Quantitative Researcher <span class="sep">/</span> AI Engineer</p>
+    <p class="hero-role">Quantitative Researcher <span class="sep">/</span> Derivatives &amp; Systematic Trading</p>
     <p class="hero-blurb">
-      Derivatives research, NSE F&amp;O, and the infrastructure underneath — cost filters,
-      validation gates, and the pipelines that decide whether a signal was ever real.
+      Quantitative researcher in NSE F&amp;O options: strategy backtesting, transaction-cost modelling and statistical validation.
     </p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#lab">Open the Options Lab <span class="arr">&rarr;</span></a>
@@ -149,7 +160,7 @@
       </button>
       <div class="tl-body">
         <ul class="bullets">
-          <li>Validated <strong>8+ strategies</strong> against real costs on 2 years of NSE F&amp;O data — filtering <strong>100% of sub-threshold signals</strong> before the desk saw them.</li>
+          <li>Validated <strong>8 strategies</strong> against real costs on 2 years of NSE F&amp;O data — <strong>all 8 stayed profitable net of costs</strong> until regulatory changes to F&amp;O trading.</li>
           <li>t-tests, regime splits and bootstrap resampling in a reproducible Python framework.</li>
           <li>Wrote <strong>8+ research notes</strong> turning vol and microstructure findings into decisions.</li>
         </ul>
@@ -169,8 +180,8 @@
       <div class="tl-body">
         <ul class="bullets">
           <li>Root-caused recurring timestamp breaks in minute-level NSE data, then automated the fix away.</li>
-          <li>Validated <strong>8+ backtested options strategies</strong> (Sharpe 1.8, 60% hit ratio).</li>
-          <li>Designed <strong>10+ systematic indicators</strong>, improving signal accuracy <strong>+15%</strong>.</li>
+          <li>Validated <strong>8+ options strategies out-of-sample</strong> (Jan 2023 – Jun 2024): Sharpe 1.8, 60% hit ratio.</li>
+          <li>Combined <strong>10+ systematic indicators</strong> into a pair-trading signal that captured <strong>15% more trades</strong>.</li>
         </ul>
         <div class="chips"><span>Python</span><span>WebSocket</span><span>Tick data</span><span>Backtesting</span></div>
       </div>
@@ -285,8 +296,8 @@
       </div>
       <div class="canvas-wrap tall"><canvas id="equityCanvas" role="img" aria-label="Cumulative return and drawdown over time"></canvas></div>
       <p class="disclaimer">
-        <strong>Illustrative reconstruction</strong> — a seeded process calibrated to the Sharpe 1.8 / 60%
-        hit-ratio figures reported for the Ikiquant backtests. Not a live track record; no proprietary data here.
+        <strong>Illustrative reconstruction</strong> — a seeded process calibrated to the out-of-sample Sharpe 1.8 / 60%
+        hit ratio reported for the Ikiquant strategies (Jan 2023 – Jun 2024). Not a live track record; no proprietary data here.
       </p>
     </div>
   </div>
@@ -304,7 +315,7 @@
       <div class="canvas-wrap"><canvas id="costCanvas" role="img" aria-label="Gross edge per candidate signal against the cost threshold"></canvas></div>
       <p class="disclaimer">
         Each bar is a candidate signal's gross edge. Raise the cost and watch the population thin out —
-        this is the gate that filtered <strong>100% of sub-threshold signals</strong> at Aurus Alpha. Edges are synthetic.
+        the same kind of cost gate the <strong>8 Aurus Alpha strategies</strong> had to clear. Edges are synthetic.
       </p>
     </div>
   </div>
@@ -324,20 +335,27 @@
   </div>
 
   <div class="proj-grid" id="projGrid">
+    <article class="proj card reveal" data-glow data-tags="derivatives research" data-skills="python pandas backtesting nsefo testing costs risk">
+      <h3>NIFTY Intraday Options Strategy Research</h3>
+      <p>Three strategies on 1-min NIFTY weekly options, net of every F&amp;O charge. Sharpe 2.31 in-sample; frozen and re-run on a 409-day holdout, they failed (Sharpe -0.36). Only a DTE-1 credit spread held up in every period.</p>
+      <div class="chips"><span>Python</span><span>Backtesting</span><span>NSE F&amp;O</span></div>
+      <p class="proj-foot"><a href="https://github.com/Yash141414/Portfolio" target="_blank" rel="noopener">View on GitHub &rarr;</a></p>
+    </article>
     <article class="proj card reveal" data-glow data-tags="derivatives infra" data-skills="python greeks streamlit">
       <h3>Black&ndash;Scholes Pricing Engine</h3>
       <p>Real-time Greeks across 5+ configurable payoffs, with live interactive payoff diagrams.</p>
       <div class="chips"><span>Python</span><span>Streamlit</span><span>Greeks</span></div>
-      <p class="proj-foot"><a href="#lab">Running live above &rarr;</a></p>
+      <p class="proj-foot"><a href="#lab">Running live above &rarr;</a> &middot; <a href="https://github.com/Yash141414/black-scholes-pricing-engine" target="_blank" rel="noopener">GitHub</a></p>
     </article>
-    <article class="proj card reveal" data-glow data-tags="research derivatives" data-skills="pandas statsmodels backtesting">
+    <article class="proj card reveal" data-glow data-tags="research derivatives" data-skills="pandas statsmodels backtesting costs risk">
       <h3>VRP &amp; Day&ndash;Night Asymmetry</h3>
-      <p>Four-stage validation pipeline with a state-persisted risk gate and automated fail-fast cost filter.</p>
+      <p>Four-stage validation pipeline for the volatility risk premium: t-stat, Sharpe and drawdown gates, plus a fail-fast cost filter.</p>
       <div class="chips"><span>pandas</span><span>statsmodels</span><span>Backtesting</span></div>
+      <p class="proj-foot"><a href="https://github.com/Yash141414/vrp-research-framework" target="_blank" rel="noopener">View on GitHub &rarr;</a></p>
     </article>
-    <article class="proj card reveal" data-glow data-tags="research" data-skills="scipy testing backtesting nsefo">
+    <article class="proj card reveal" data-glow data-tags="research" data-skills="scipy testing backtesting nsefo costs">
       <h3>Strategy Validation Suite</h3>
-      <p>8+ strategies stress-tested against STT, GST and slippage over 2 years of NSE F&amp;O data.</p>
+      <p>8 strategies tested against STT, GST and slippage over 2 years of NSE F&amp;O data; all 8 stayed profitable net of costs until F&amp;O regulatory changes.</p>
       <div class="chips"><span>scipy</span><span>Bootstrap</span><span>Regime analysis</span></div>
     </article>
     <article class="proj card reveal" data-glow data-tags="infra" data-skills="postgresql tensorrt python">
@@ -368,6 +386,7 @@
         <button class="sk" data-skill="statsmodels">statsmodels</button>
         <button class="sk" data-skill="postgresql">SQL / PostgreSQL</button>
         <button class="sk" data-skill="testing">Hypothesis testing</button>
+        <button class="sk" data-skill="risk">Risk metrics (Sharpe, Calmar, drawdown)</button>
         <button class="sk" data-skill="dataqa">Data validation &amp; QA</button>
       </div>
     </div>
@@ -388,6 +407,7 @@
         <button class="sk" data-skill="nsefo">NSE F&amp;O</button>
         <button class="sk" data-skill="greeks">Greeks &amp; vol surface</button>
         <button class="sk" data-skill="backtesting">Backtesting</button>
+        <button class="sk" data-skill="costs">Transaction-cost modelling</button>
         <button class="sk" data-skill="micro">Microstructure</button>
         <button class="sk" data-skill="nism">NISM-VIII</button>
       </div>
@@ -406,7 +426,7 @@
     <div class="card reveal" data-glow>
       <h3 class="card-h">currently</h3>
       <ul class="now-list">
-        <li><span class="tag live">active</span> Intraday NIFTY options research — out-of-sample harness before trusting any in-sample Sharpe.</li>
+        <li><span class="tag live">active</span> NIFTY intraday options research (<a href="https://github.com/Yash141414/Portfolio" target="_blank" rel="noopener">on GitHub</a>): the frozen rules failed their holdout, so now forward-testing the one DTE-1 credit spread that held up.</li>
         <li><span class="tag live">active</span> A vectorised BankNifty short-strangle backtest, optimised for full-history runtime.</li>
         <li><span class="tag">reading</span> Microstructure and VRP literature — which published effects survive Indian costs?</li>
       </ul>
