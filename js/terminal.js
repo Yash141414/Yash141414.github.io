@@ -47,7 +47,10 @@
         '<span class="t-hi">Yash Chheda</span> — quantitative researcher, derivatives &amp; systematic trading',
         'Mumbai &amp; Bangalore, India',
         '',
-        'NSE F&amp;O options: strategy backtesting, transaction-cost modelling, statistical validation.'
+        'Quantitative researcher in NSE F&amp;O options. I build backtests, model what',
+        'trading really costs and test whether an edge survives out-of-sample, at',
+        'Aurus Alpha and Ikiquant and in my own NIFTY options research.',
+        'Most recently I built GPU inference and benchmarking systems at Nxtgen AI.'
       ].join('\n'));
     },
 
